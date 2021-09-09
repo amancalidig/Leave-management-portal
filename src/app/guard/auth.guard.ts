@@ -9,28 +9,22 @@ import {
 import { Observable } from 'rxjs';
 import { AuthService } from '../sevices/auth.service';
 
-
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  constructor(
-    public authService: AuthService,
-    public router: Router,
- 
-  ) {}
+  constructor(public authService: AuthService, public router: Router) {}
 
   canActivate(
     next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot,
+    state: RouterStateSnapshot
   ):
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
     if (this.authService.isLoggedIn !== true) {
-      this.router.navigate(['login']);
-      // this.router.navigate(['']);
+      this.router.navigate(['']);
     }
     return true;
   }

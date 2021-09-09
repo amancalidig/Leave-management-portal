@@ -11,6 +11,7 @@
     "sourceMap": true,
     "declaration": false,
     "skipLibCheck": true,
+    "strictPropertyInitialization": false,
     "downlevelIteration": true,
     "experimentalDecorators": true,
     "moduleResolution": "node",

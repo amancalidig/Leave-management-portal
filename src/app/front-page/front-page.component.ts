@@ -3,13 +3,17 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-front-page',
   templateUrl: './front-page.component.html',
-  styleUrls: ['./front-page.component.scss']
+  styleUrls: ['./front-page.component.scss'],
 })
 export class FrontPageComponent implements OnInit {
+  title = 'admin-panel-layout';
+  sideBarOpen = true;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  sideBarToggler() {
+    this.sideBarOpen = !this.sideBarOpen;
   }
-
 }

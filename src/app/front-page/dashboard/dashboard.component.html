@@ -1,8 +1,35 @@
-<div class="container-fluid page">
-    <div class="d-flex page__box p-3 mt-2">Dashboard</div>
-    <div class="page__content shadow p-3 position-relative">
-      <div class="page__content-data position-absolute text-center">
-        Dashboard Content Goes Here
-      </div>
-    </div>
-  </div>
+<div class="employee-Form">
+  <mat-card class="mat-elevation-z12">
+    <mat-card-title style="text-align: center">Create Leave</mat-card-title>
+    <mat-form-field >
+      <mat-label for="employeeName">Employee Name</mat-label>
+      <input matInput >
+      <mat-icon matSuffix>account_circle</mat-icon>
+      
+    </mat-form-field>
+    <mat-form-field >
+      <mat-label for="title">Title</mat-label>
+      <mat-select>
+        <mat-option value="one">Sick Leave </mat-option>
+        <mat-option value="two">Urgent Work</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field >
+      <mat-label for="date">Choose a date</mat-label>
+      <input matInput [matDatepicker]="picker">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field >
+      <mat-label for="text">Textarea</mat-label>
+      <textarea matInput></textarea>
+    </mat-form-field>
+    <button
+    mat-raised-button
+    color="primary"
+    class="login-button">
+    Submit
+  </button>
+  </mat-card>
+</div>
+
