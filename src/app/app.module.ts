@@ -23,9 +23,13 @@ import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './sevices/auth.service';
+import { AngularFirestore } from 'angularfire2/firestore';
+import { EmployeeLeaveComponent } from './employee-leave/employee-leave.component';
+import {MatTableModule} from '@angular/material/table';
+
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, ],
+  declarations: [AppComponent, LoginComponent, EmployeeLeaveComponent, ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -36,6 +40,7 @@ import { AuthService } from './sevices/auth.service';
     MatInputModule,
     MatCheckboxModule,
     MatIconModule,
+    MatTableModule,
     MatTabsModule,
     MatDividerModule,
     MatCardModule,
@@ -46,7 +51,7 @@ import { AuthService } from './sevices/auth.service';
     ReactiveFormsModule,
     BrowserAnimationsModule,
   ],
-  providers: [AuthService],
+  providers: [AuthService,AngularFirestore],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

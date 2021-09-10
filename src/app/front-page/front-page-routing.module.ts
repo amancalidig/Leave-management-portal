@@ -4,6 +4,9 @@ import { Routes, RouterModule } from '@angular/router';
 import { FrontPageComponent } from './front-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
+import { EmployeeLeaveComponent } from '../employee-leave/employee-leave.component';
+
+
 import { AuthGuard } from '../guard/auth.guard';
 
 const routes: Routes = [
@@ -14,6 +17,11 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'employee-leaves',
+        component: EmployeeLeaveComponent,
         canActivate: [AuthGuard],
       },
       //   {
