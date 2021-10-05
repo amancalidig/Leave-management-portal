@@ -11,7 +11,7 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
   providedIn: 'root'
 })
 
-export class AuthService {
+export class AdminService {
   logout() {
     throw new Error('Method not implemented.');
   }
@@ -21,14 +21,13 @@ export class AuthService {
     public afs: AngularFirestore,   // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
-    public ngZone: NgZone, // NgZone service to remove outside scope warning
+    public ngZone: NgZone // NgZone service to remove outside scope warning
   ) {
   
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-       
-        this.userData = user;
+    this.afAuth.authState.subscribe(admin => {
+      if (admin) {
         console.log(this.userData)
+        this.userData = admin;
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user') ?? ' ')
       } else {
@@ -37,58 +36,24 @@ export class AuthService {
       }
     })
   }
-   
+
   // Sign in with email/password
-  async SignIn(email: any, password: any) {
+  SignIn(email: any, password: any) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
       .then((result:any) => {
-      console.log("mylastwish", result);
-        
-       // this.getUserData(result.user);
-        // this.ngZone.run(() => {
-        //   this.router.navigate(['employee-leave']);
-        // });
-     
-
-
+        this.ngZone.run(() => {
+          this.router.navigate(['employee-leave']);
+        });
+        this.SetUserData(result.user);
       }).catch((error) => {
         window.alert(error.message)
       })
-
-  }
-
-  getUserRole = (email: string) => {
-    const user = this.afs.collection("users").ref.where("userName", "==" , email ).onSnapshot((snap) => {
-      snap.forEach((re) => {
-        const userRole = re.data();
-        console.log(userRole);
-      })
-    });
-    return user;
-  }
-
-  getUserDataNew(result: any){
-    let user = result.user
-        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-       
-        userRef.ref.get()
-        .then(function(doc) {
-            if (doc.exists) {
-                 var u = doc.data();
-                console.log('User data: ', u);
-                  result.user.role = u?.role
-                  return result          
-            } else {
-              result.user.role = "user"
-              return result
-            }
-       })
   }
 
   SignUp(email: any, password: any) {
     return this.afAuth.auth.createUserWithEmailAndPassword(email, password,)
       .then((result) => {
-       console.log("signUp", result)
+        
         this.SetUserData(result.user);
       }).catch((error) => {
         window.alert(error.message)
@@ -98,13 +63,8 @@ export class AuthService {
 
  
   get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user') ?? ' ')
+    const user = JSON.parse(localStorage.getItem('admin') ?? ' ')
     return user !== null ;
-  }
-  getUserData(user:any) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    let userData = userRef
-    return userData
   }
   SetUserData(user:any) {
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
@@ -126,6 +86,7 @@ export class AuthService {
       this.router.navigate(['']);
     })
   }
+
 
 
 }

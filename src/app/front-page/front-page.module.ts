@@ -33,6 +33,17 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { DatePipe } from '@angular/common';
+
+
+import { EmployeeService } from '../shared/employee.service';
+import { NotificationService } from '../shared/notification.service';
+import { MatDialogModule ,MatDialogRef} from '@angular/material/dialog';
+
+
 
 
 @NgModule({
@@ -48,6 +59,9 @@ import {MatTableModule} from '@angular/material/table';
     CommonModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatSnackBarModule,
+    MatPaginatorModule,
+    MatDialogModule,
     FormsModule,
     MatMenuModule,
     MatInputModule,
@@ -57,8 +71,9 @@ import {MatTableModule} from '@angular/material/table';
     MatDividerModule,
     MatCardModule,
     MatListModule,
+    AngularFireDatabaseModule ,
     NgbModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     ReactiveFormsModule,
     MatToolbarModule,
@@ -71,6 +86,9 @@ import {MatTableModule} from '@angular/material/table';
     MatButtonModule,
     MatTableModule,
   ],
-  providers: [],
+  providers: [EmployeeService,NotificationService, DatePipe, {
+    provide: MatDialogRef,
+    useValue: {}
+  },],
 })
 export class FrontPageModule {}

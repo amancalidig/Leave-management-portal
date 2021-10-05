@@ -24,16 +24,24 @@ import { AngularFireAuthModule } from 'angularfire2/auth';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './sevices/auth.service';
 import { AngularFirestore } from 'angularfire2/firestore';
-import { EmployeeLeaveComponent } from './employee-leave/employee-leave.component';
 import {MatTableModule} from '@angular/material/table';
+import { EmployeeLeaveComponent } from './front-page/employee-leave/employee-leave.component';
+import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialogModule } from '@angular/material/dialog';
+import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { DashboardComponent } from './front-page/dashboard/dashboard.component';
+import { AdminComponent } from './front-page/admin/admin.component';
+
 
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, EmployeeLeaveComponent, ],
+  declarations: [AppComponent, LoginComponent, EmployeeLeaveComponent, MatConfirmDialogComponent, AdminComponent ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatSidenavModule,
+    AngularFireDatabaseModule,
     MatToolbarModule,
     FormsModule,
     MatMenuModule,
@@ -42,16 +50,19 @@ import {MatTableModule} from '@angular/material/table';
     MatIconModule,
     MatTableModule,
     MatTabsModule,
+    MatDialogModule,
     MatDividerModule,
+    MatPaginatorModule,
     MatCardModule,
     MatListModule,
     NgbModule,
-    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
   ],
   providers: [AuthService,AngularFirestore],
   bootstrap: [AppComponent],
+  entryComponents:[DashboardComponent,MatConfirmDialogComponent]
 })
 export class AppModule {}

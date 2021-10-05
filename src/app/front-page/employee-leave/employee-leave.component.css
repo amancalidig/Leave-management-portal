@@ -1,0 +1,43 @@
+table {
+  width: 50%;
+}
+
+.search-div .button-create {
+  padding: .3rem 1rem;
+  border: none;
+  -webkit-box-shadow: 5px 5px 10px #888;
+          box-shadow: 5px 5px 10px #888;
+}
+
+.search-div .button-create span {
+  font-size: 20px;
+  color: #000;
+}
+
+.edit-delete {
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  gap: 20px;
+}
+
+.edit-delete button {
+  border: none;
+  -webkit-box-shadow: 3px 3px 5px #888;
+          box-shadow: 3px 3px 5px #888;
+}
+
+.edit-delete li {
+  border: none;
+}
+
+.edit-delete li .launch {
+  color: green;
+  outline: none;
+}
+
+.edit-delete li .delete_details {
+  color: red;
+  outline: none;
+}
+/*# sourceMappingURL=employee-leave.component.css.map */

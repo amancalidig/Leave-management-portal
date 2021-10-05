@@ -1,53 +1,53 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AngularFirestore ,AngularFirestoreCollection } from 'angularfire2/firestore';
-import { AngularFireAuth } from 'angularfire2/auth';
-import { Router } from '@angular/router';
+import { MatDialogRef } from '@angular/material/dialog';
+
+import { EmployeeService } from '../../shared/employee.service';
+import { NotificationService } from '../../shared/notification.service';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  private submissionForm: AngularFirestoreCollection<any>;
 
-  user: any = JSON.parse(sessionStorage.getItem('user') || 'null');
+  constructor(public service: EmployeeService,
+    private notificationService: NotificationService,
+    public dialogRef: MatDialogRef<DashboardComponent>) { }
 
-  constructor(private fb:FormBuilder,private firestore:AngularFirestore,
-    private router: Router
-    
-    ) {}
-  
-  ourForm:FormGroup
-  
-  ngOnInit(): void {
-    this.submissionForm = this.firestore.collection('submissions');
-    this.ourForm = this.fb.group({
-    employeeName : ['',Validators.required],
-    title : ['',Validators.required],
-    date : ['',Validators.required],
-    text : ['',Validators.required],
-    });
+
+
+  ngOnInit() {
+    this.service.getEmployees();
   }
-  getEmployee(){
-  this.submissionForm = this.firestore.collection('submissions');
-  return this.submissionForm.snapshotChanges();
+
+  onClear() {
+    this.service.form.reset();
+    this.service.initializeFormGroup();
+    this.notificationService.success(':: Submitted successfully');
   }
-  // insertEmployee(value:any){
-  //   this.submissionForm.add(value).then(res =>({
-  //     employeeName:'',
-  //     title:'',
-  //     date:'',
-  //     text:'',
-  //   }));
-  // }
-  submitData(value:any){
-    this.submissionForm.add(value).then(res => {
-      console.log('Data added')
-      
-      this.router.navigate(['employee-leaves']);
-    }).catch(err => console.log(err)
-    );
+
+  onSubmit() {
+    if (this.service.form.valid) {
+      if (!this.service.form.get('$key')!.value){
+        this.service.insertEmployee(this.service.form.value);
+
+      }
+      else{
+        this.service.updateEmployee(this.service.form.value);
+
+      }
+      this.service.form.reset();
+      this.service.initializeFormGroup();
+      this.notificationService.success(':: Submitted successfully');
+      this.onClose();
+    }
   }
+
+  onClose() {
+    this.service.form.reset();
+    this.service.initializeFormGroup();
+    this.dialogRef.close();
+  }
+
 }

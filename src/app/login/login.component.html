@@ -50,6 +50,7 @@
       <mat-tab label="Register">
         <mat-card-content>
           <form action [formGroup]="signupForm" role="form">
+           
             <mat-form-field>
               <input
                 matInput
@@ -78,6 +79,7 @@
 
               <mat-icon matSuffix>lock</mat-icon>
             </mat-form-field>
+           
 
             <h6 *ngIf="signUpError" class="err-msg">
               Sorry! Unable to Register.

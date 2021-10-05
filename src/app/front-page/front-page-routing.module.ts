@@ -3,11 +3,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { FrontPageComponent } from './front-page.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-
-import { EmployeeLeaveComponent } from '../employee-leave/employee-leave.component';
+// 
+// import { EmployeeLeaveComponent } from '../employee-leave/employee-leave.component';
 
 
 import { AuthGuard } from '../guard/auth.guard';
+import { EmployeeLeaveComponent } from './employee-leave/employee-leave.component';
 
 const routes: Routes = [
   {
@@ -20,7 +21,7 @@ const routes: Routes = [
         canActivate: [AuthGuard],
       },
       {
-        path: 'employee-leaves',
+        path: 'employee-leave',
         component: EmployeeLeaveComponent,
         canActivate: [AuthGuard],
       },
