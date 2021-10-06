@@ -12,10 +12,11 @@ import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firesto
 })
 
 export class AuthService {
-  logout() {
-    throw new Error('Method not implemented.');
-  }
+  // logout() {
+  //   throw new Error('Method not implemented.');
+  // }
   userData: any; // Save logged in user data
+  firebaseAuth: any;
 
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
@@ -30,6 +31,9 @@ export class AuthService {
         this.userData = user;
         console.log(this.userData)
         localStorage.setItem('user', JSON.stringify(this.userData));
+        
+        
+        
         JSON.parse(localStorage.getItem('user') ?? ' ')
       } else {
         localStorage.setItem('user','');
@@ -41,19 +45,6 @@ export class AuthService {
   // Sign in with email/password
   async SignIn(email: any, password: any) {
     return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((result:any) => {
-      console.log("mylastwish", result);
-        
-       // this.getUserData(result.user);
-        // this.ngZone.run(() => {
-        //   this.router.navigate(['employee-leave']);
-        // });
-     
-
-
-      }).catch((error) => {
-        window.alert(error.message)
-      })
 
   }
 
@@ -120,12 +111,12 @@ export class AuthService {
   }
 
   // Sign out
-  SignOut() {
-    return this.afAuth.auth.signOut().then(() => {
-      localStorage.removeItem('user');
-      this.router.navigate(['']);
-    })
+  logout() {
+    this.firebaseAuth.auth.signOut();
+    sessionStorage.clear();
+    this.router.navigate(['']);
+  }
   }
 
 
-}
+

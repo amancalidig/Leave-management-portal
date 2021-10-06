@@ -9,6 +9,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 
 import { AuthGuard } from '../guard/auth.guard';
 import { EmployeeLeaveComponent } from './employee-leave/employee-leave.component';
+import { AdminComponent } from './admin/admin.component';
 
 const routes: Routes = [
   {
@@ -23,6 +24,11 @@ const routes: Routes = [
       {
         path: 'employee-leave',
         component: EmployeeLeaveComponent,
+        canActivate: [AuthGuard],
+      },
+      {
+        path: 'admin',
+        component: AdminComponent,
         canActivate: [AuthGuard],
       },
       //   {

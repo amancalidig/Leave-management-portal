@@ -10,6 +10,7 @@ import {
 } from '@angular/forms';
 import { map } from 'lodash';
 import { combineLatest } from 'rxjs';
+import { AngularFirestore, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 @Component({
   selector: 'app-home',
@@ -24,8 +25,9 @@ export class LoginComponent implements OnInit {
   firestore: any;
   firestoreService: any;
 
+
   ngOnInit() {
-    this.authService.getUserRole("none");
+    // this.authService.getUserRole("none");
   }
   isErrorState(
     control: FormControl | null,
@@ -42,7 +44,8 @@ export class LoginComponent implements OnInit {
   constructor(
     public authService: AuthService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private afs: AngularFirestore 
   ) {
     this.loginForm = this.formBuilder.group({
       email: [
@@ -82,46 +85,44 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginError = false;
 
-    console.log(
-      this.loginForm.value.email,
-      this.loginForm.value.password,
-      'btn clicked'
-    );
     this.authService
       .SignIn(this.loginForm.value.email, this.loginForm.value.password)
       .then((r:any) => {
-        let user = r.user
+        console.log("after login",r)
+        // let user = r.user
 
 
-      //   const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+        const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${r.user.uid}`);
        
-      //   userRef.ref.get()
-      //   .then(function(doc) {
-      //       if (doc.exists) {
-      //            var u = doc.data();
-      //           console.log('User data: ', u);
-      //             result.user.role = u?.role
-      //             return result          
-      //       } else {
-      //         result.user.role = "user"
-      //         return result
-      //       }
-      //  })
-        console.log("user dat=====a", r.user);
-      localStorage.setItem('user', JSON.stringify(r));
+        userRef.ref.get()
+        .then((doc) => {
+            if (doc.exists) {
+              var u = doc.data();
+                console.log('User data: ', u?.role);
+                let role = u?.role;
+              
+                 if(role == "user") {
+                  this.router.navigateByUrl("/employee-leave");
+                 } else if(role == "admin") {
+                  this.router.navigateByUrl("/admin");
+                 }        
+            } else {
+              console.log('else')
+            }
+       })
+      // localStorage.setItem('user', JSON.stringify(r));
 
-        this.router.navigate(['employee-leave']);
+      //   this.router.navigate(['employee-leave']);
       })
 
-      .catch((e:any) => {
+      .catch((error:any) => {
         this.loginError = true;
-        console.log(e);
+        console.log(error);
       });
   }
+    
 
-  SignOut() {
-    this.authService.SignOut();
-  }
+  
 }
 function getEmployees() {
   throw new Error('Function not implemented.');

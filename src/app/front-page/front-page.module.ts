@@ -42,9 +42,8 @@ import { DatePipe } from '@angular/common';
 import { EmployeeService } from '../shared/employee.service';
 import { NotificationService } from '../shared/notification.service';
 import { MatDialogModule ,MatDialogRef} from '@angular/material/dialog';
-
-
-
+import { AdminComponent } from './admin/admin.component';
+import { EmployeeLeaveComponent } from './employee-leave/employee-leave.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +52,8 @@ import { MatDialogModule ,MatDialogRef} from '@angular/material/dialog';
     HeaderComponent,
     DashboardComponent,
     SidenavComponent,
+    AdminComponent,
+    EmployeeLeaveComponent
   ],
   imports: [
     FrontPageRoutingModule,
